@@ -1,0 +1,1 @@
+- resource: <https://www.geeksforgeeks.org/convert-csv-to-json-using-python/>
