@@ -45,7 +45,7 @@ class AlmaUpdater():
             if alma_already_updated == False:
                 self.send_put_to_alma( code_key )
                 self.update_tracker( code_key)
-            if i >= 1:                   # for development-checking
+            if i >= 800:                   # for development-checking
                 break
         return
 
@@ -97,6 +97,9 @@ class AlmaUpdater():
         r = requests.put( url, headers=hdrs, json=payload_dct )
         log.debug( f'r.content, ``{r.content}``' )
         log.debug( f'r.status_code, ``{r.status_code}``')
+        if r.status_code != 200:
+            raise Exception( 'PROBLEM!' )
+        return
 
     def update_tracker( self, code_key ):
         """ Updates tracker. """
