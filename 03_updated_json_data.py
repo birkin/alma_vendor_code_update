@@ -40,7 +40,7 @@ class JsonUpdater():
             if check_result == 'updated':
                 self.save_updated_data()
                 self.update_tracker( code_key )
-            if i > 5:                   # for development-checking
+            if i > 800:                   # for development-checking
                 break
         return
 
