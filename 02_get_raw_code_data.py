@@ -48,9 +48,9 @@ class RawDataBuilder( object ):
                 # log.debug( f'self.raw_data_dct, ``{self.raw_data_dct}``' )
                 self.save_raw_data()                            # writes to json file -- yes, lots of overhead, but safe
                 self.update_tracker( code_key )
-            if i > 1:             # for development-checking
+            if i > 800:             # for development-checking
                 break
-            return
+        return
 
     def load_tracker( self ):
         tracker_path = f'{OUTPUT_DIR}/tracker.json'
