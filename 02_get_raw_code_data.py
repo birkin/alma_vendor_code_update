@@ -48,7 +48,7 @@ class RawDataBuilder( object ):
                 # log.debug( f'self.raw_data_dct, ``{self.raw_data_dct}``' )
                 self.save_raw_data()                            # writes to json file -- yes, lots of overhead, but safe
                 self.update_tracker( code_key )
-            if i > 2:               # for development-checking
+            if i > 800:             # for development-checking
                 break
 
     def load_tracker( self ):
@@ -108,8 +108,10 @@ class RawDataBuilder( object ):
         data_for_code = r.json()
         assert type(data_for_code) == dict
         data_keys = data_for_code.keys()
-        assert sorted(data_keys) == ['access_provider', 'account', 'code', 'contact_info', 'contact_person', 'currency', 'edi_info', 'financial_sys_code', 'governmental', 'interface', 'language', 'liable_for_vat', 'library', 'licensor', 'link', 'material_supplier', 'name', 'note', 'status']
-        log.debug( f'data_for_code, ``{pprint.pformat(data_for_code)}``' )
+        if sorted(data_keys) != ['access_provider', 'account', 'code', 'contact_info', 'contact_person', 'currency', 'edi_info', 'financial_sys_code', 'governmental', 'interface', 'language', 'liable_for_vat', 'library', 'licensor', 'link', 'material_supplier', 'name', 'note', 'status']:
+            log.debug( f'unusual data_keys, ``{sorted(data_keys)}``' )
+            log.debug( f'data_for_code, ``{pprint.pformat(data_for_code)}``' )
+        log.debug( 'raw-data grabbed' )
         return data_for_code
 
     def save_raw_data( self ):
