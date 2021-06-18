@@ -32,8 +32,9 @@ class RawDataBuilder( object ):
         """ MANAGER. """
         self.load_tracker(); assert type(self.tracker_dct) == dict, type(self.tracker_dct)
         items = self.tracker_dct.items()
-        for code_key, data_val in items:
+        for i, (code_key, data_val) in enumerate(items):
             log.debug( f'code_key, ``{code_key}``' )
+            log.debug( f'i, ``{i}``' )
             assert type(code_key) == str
             assert type(data_val) == dict
             self.check_file_existence( code_key )  # creates file if it doesn't exist; also loads self.raw_data_dct
@@ -47,7 +48,8 @@ class RawDataBuilder( object ):
                 # log.debug( f'self.raw_data_dct, ``{self.raw_data_dct}``' )
                 self.save_raw_data()                            # writes to json file -- yes, lots of overhead, but safe
                 self.update_tracker( code_key )
-            break
+            if i > 2:               # for development-checking
+                break
 
     def load_tracker( self ):
         tracker_path = f'{OUTPUT_DIR}/tracker.json'
