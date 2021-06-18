@@ -40,29 +40,9 @@ class JsonUpdater():
             if check_result == 'updated':
                 self.save_updated_data()
                 self.update_tracker( code_key )
-            if i > 1:                   # for development-checking
+            if i > 5:                   # for development-checking
                 break
-            return
-
-            # initial_financial_sys_code = self.updated_data_dct[code_key]['financial_sys_code']
-            # assert type(initial_financial_sys_code) == str
-            # log.debug( f'initial financial_sys_code, ``{initial_financial_sys_code}``' )
-            # if initial_financial_sys_code[1:] == 'S':
-            #     log.debug( 'financial_sys_code good' )
-            # else:
-            #     ## update the financial_sys_code
-            #     updated_financial_sys_code = f'S{initial_financial_sys_code}'
-            #     assert type(updated_financial_sys_code) == str
-            #     log.debug( f'initial_financial_sys_code updated to, ``{updated_financial_sys_code}``' )
-            #     self.updated_data_dct[code_key]['financial_sys_code'] = updated_financial_sys_code
-            #     ## save to json file
-            #     updated_jsn = json.dumps( self.updated_data_dct, sort_keys=True, indent=2 )
-            #     with open( updated_data_path, 'w', encoding='utf-8' ) as updated_data_fh:
-            #         updated_data_fh.write( updated_jsn )
-            #     ## update_tracker
-            #     self.updated_data_dct( code_key )
-
-
+        return
 
     def load_tracker( self ):
         tracker_path = f'{OUTPUT_DIR}/tracker.json'
@@ -105,7 +85,7 @@ class JsonUpdater():
         initial_financial_sys_code = self.updated_data_dct[code]['financial_sys_code']
         assert type(initial_financial_sys_code) == str
         log.debug( f'initial financial_sys_code, ``{initial_financial_sys_code}``' )
-        if initial_financial_sys_code[1:] == 'S':
+        if initial_financial_sys_code[0:1] == 'S':
             return_val = 'not_updated'
             log.debug( 'financial_sys_code good' )
         else:  # update financial_sys_code
