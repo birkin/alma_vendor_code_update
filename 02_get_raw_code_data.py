@@ -31,13 +31,13 @@ class RawDataBuilder( object ):
     def build_raw_data( self ):
         """ MANAGER. """
         self.load_tracker(); assert type(self.tracker_dct) == dict, type(self.tracker_dct)
+        self.check_file_existence()  # creates file if it doesn't exist; also loads self.raw_data_dct
         items = self.tracker_dct.items()
         for i, (code_key, data_val) in enumerate(items):
             log.debug( f'code_key, ``{code_key}``' )
             log.debug( f'i, ``{i}``' )
             assert type(code_key) == str
-            assert type(data_val) == dict
-            self.check_file_existence( code_key )  # creates file if it doesn't exist; also loads self.raw_data_dct
+            assert type(i) == int
             ## see if raw data exists.
             raw_data_exists = self.check_code_raw_data_existence( code_key ); assert type(raw_data_exists) == bool
             if raw_data_exists:     # skip
@@ -48,8 +48,9 @@ class RawDataBuilder( object ):
                 # log.debug( f'self.raw_data_dct, ``{self.raw_data_dct}``' )
                 self.save_raw_data()                            # writes to json file -- yes, lots of overhead, but safe
                 self.update_tracker( code_key )
-            if i > 800:             # for development-checking
+            if i > 1:             # for development-checking
                 break
+            return
 
     def load_tracker( self ):
         tracker_path = f'{OUTPUT_DIR}/tracker.json'
@@ -64,10 +65,9 @@ class RawDataBuilder( object ):
         log.debug( f'self.tracker_dct loaded' )
         return
 
-    def check_file_existence( self, code ):
+    def check_file_existence( self ):
         """ Checks to see if output file exists, creates it if not.
             Also loads self.raw_data_dct """
-        assert type(code) == str
         raw_data_path = f'{OUTPUT_DIR}/raw_code_data.json'
         if os.path.exists( raw_data_path ):
             with open( raw_data_path, encoding='utf-8' ) as raw_data_fh:
